@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Puntos Repartidos por rango de fechas</h4>
+                <h6 class="card-subtitle">Rango de fechas inicial y final de los puntos repartidos por cada aliado</h6>
+                <!--calendario-->
+                <div class="p-fluid p-grid formgrid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <label for="range">Elija el rango de fecha, debe seleccionar inicio y fin</label>
+                        <p-calendar [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" inputId="range" dateFormat="yy-mm-dd" [showIcon]="true" ></p-calendar>
+                                   
+                    </div>
+                </div>
+                <div class="p-fluid p-grid p-formgrid">
+                    <div class="p-field p-col-12 p-md-4">
+                        <button class="btn btn-danger" (click) ="searchBetween()">Buscar</button>
+                    </div>
+                </div>
+                <!--fincalendario-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargandoReporte">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <!--tabla primeng -->
+                <p-table 
+                [value] ="listFilterAliados"
+                [paginator] = "true"
+                [rows]      =   "10"
+                [showCurrentPageReport] = "true"
+                currentPageReportTemplate ="Mostrando {first} de {last} de {totalRecords} resultados"
+                [rowsPerPageOptions]="[10,25,50]"
+                >
+                <ng-template pTemplate="caption">
+                    <div class="flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel"
+                        (click) = "exportExcel()"
+                        class="p-button-success mr-2"
+                        pTooltip="XLS"
+                        tooltipPosition="bottom"
+                        ></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate = "header">
+                    <tr>
+                            <th>Id</th>
+                            <th>Nit</th>
+                            <th>Estado</th>                                                             
+                            <th>Razón Social</th>
+                            <th>Dirección sucursal</th>
+                            <th>Municipio</th>
+                            <th>Puntos Repartidos</th>
+                            <th>Valor Factura</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                            <td>{{item.Id}}</td>
+                            <td>{{item.Nit}}</td>
+                            <td>{{item.Estado}}</td>
+                            <td>{{item.Aliado}}</td>     
+                            <td>{{item.Direccion}}</td>   
+                            <td>{{item.Municipio}}</td>   
+                            <td>{{item.PuntosRepartidos}}</td>   
+                            <td>{{item.ValorxFacturar}}</td>
+                    </tr>
+                </ng-template>
+                 
+                </p-table>
+           <!--fin--->
+            </div>
+        </div>
+    </div>
+</div>
